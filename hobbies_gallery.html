@@ -2,33 +2,88 @@
 <!-- Created On: 09/02/2023 -->
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Melissa Olsen - biosite</title>
-		<meta name="description" content="Hobbies"> 
-		<meta name="keywords" content="olsen, hobbies, biosite"> 
-		<meta name="author" content="Keith Olsen"> 
-		<meta name="robots" content="nofollow"> 
-		<link href="site.css" type="text/css" rel="stylesheet">
-	</head>
+<head>
+    <title>Melissa Olsen - biosite</title>
+    <meta name="description" content="Hobbies"> 
+    <meta name="keywords" content="olsen, hobbies, biosite"> 
+    <meta name="author" content="Keith Olsen"> 
+    <meta name="robots" content="nofollow"> 
+    <link href="site.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Melissa Olsen</h1>
+    </header>
+    
+    <div id="navbar">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./hobby.html">Hobbies</a>
+    </div>
+    
+    <div id="gallery-container"></div> <!-- Corrected opening and closing div tags -->
+    
+    <script>
+        // Function to handle image click and toggle enlargement
+        // Function to handle image click and toggle enlargement
+		function toggleEnlargement(event) {
+			console.log("Image clicked"); // Add this line to check if the function is called
+			const clickedImage = event.target;
 
-	<header>
-		<h1>Melissa Olsen</h1>
-	</header>
-	
-	<div id="navbar">
-		<a href="./index.html">Home</a>
-		<a href="./about.html">About</a>
-		<a href="./hobby.html">Hobbies</a>
-	</div>
-	
-	<body>
-		<div id="container">
-			<div class = "gallery">
-			
-			<div>
-		</div>
-	</body>
-	<footer>
+			// Toggle the 'enlarged' class
+			clickedImage.classList.toggle("enlarged");
 
-	</footer>
+			// Remove 'enlarged' class from other images
+			const galleryImages = document.querySelectorAll("#gallery-container img");
+			galleryImages.forEach(image => {
+				if (image !== clickedImage) {
+					image.classList.remove("enlarged");
+				}
+			});
+		}
+
+        // Ensure the script runs after the page is fully loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve data from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get("category");
+
+            // Simulated data based on the category (in a real scenario, you'd fetch data from a database or server)
+            const galleryData = {
+                crochet: [
+                    "crochetBlanket.jpg",
+                    "Project_blanket_2.jpg",
+                    "magicBlanket.jpg"
+                ],
+                crafting: [
+                    "videoGameOrnament.jpg",
+                    "bountyHunterTumbler.jpg",
+                    "guitarStrap.jpg"
+                ],
+                movies: [
+                    "movies_placeholder.png",
+                    "movies_placeholder.png",
+                    "movies_placeholder.png"
+                ]
+            };
+
+            // Generate HTML for the gallery based on the category
+            const galleryContainer = document.getElementById("gallery-container");
+            const galleryImages = galleryData[category] || [];
+
+            galleryImages.forEach(file => {
+                const imgElement = document.createElement("img");
+                imgElement.src = "images/" + file;
+                imgElement.alt = category;
+                galleryContainer.appendChild(imgElement);
+            });
+
+            // Attach a click event listener to each image
+            const loadedImages = document.querySelectorAll("#gallery-container img");
+            loadedImages.forEach(image => {
+                image.addEventListener("click", toggleEnlargement);
+            });
+        });
+    </script>
+</body>
 </html>
